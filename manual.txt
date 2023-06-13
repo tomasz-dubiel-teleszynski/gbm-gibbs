@@ -1,0 +1,56 @@
+-------------
+Folder description:
+-------------
+
+  data*: Excel file with three sheets of data, total income at country and bank level and operating cost
+   funs: functions used to calculate different things in the bailout model such as time, threshold or value for gov
+    gbm: Bayesian estimation routines for geometric brownian motion
+    llt: local linear trend model to identify outliers, structural breaks and slope changes
+  mats*: exemplary mat files with outputs which are saved when scripts are run
+scripts: routines which are run in particular order to replicate results as in the bailout paper
+
+* data from commercial provided hence removed
+
+-------------
+Scripts running order related to main part (AUTO - automatic, MANU - manual/user inspection recommended, only for private and gov cost):
+-------------
+
+AUTO 1) cmusigGBM.m  - to obtain parameters of gbm at country level
+AUTO 2) bmusigGBM.m  - to obtain parameters of gbm at bank level using country parameters as priors
+MANU 3) cvcgLLTman.m - to obtain cost estimates for private investor and government, set at the moment to use stored breka points
+		       but for new data can be used semi-automatically/manually to investigate outputs of the llt model and 
+		       identify new breakpoint storing them online and using these to differentiate between these two costs
+AUTO 4) final_cTI_and_bTC.m - main script to calculate all variables of interest using gbm country parameters for all the banks
+			      where results need to be taken manually from workspace and organized in tables like in the paper.
+AUTO 5) final_bTI_and_bTC.m - main script to calculate all variables of interest using gbm individual bank parameters where
+			      results need to be taken manually from workspace and organized in tables like in the paper.
+AUTO 6) Gcalcs.m - additional script to calculate value of a bnank for the government following bailout.
+
+-------------
+Scripts running order related to NII part (comments above apply):
+-------------
+
+AUTO 1) cmusigGBMnii.m 
+AUTO 2) bmusigGBMnii.m
+MANU 3) cvcgLLTman.m - does not have to be run if corresponding mat file is already there
+AUTO 4) final_cTI_and_bTCnii.m
+AUTO 5) final_bTI_and_bTCnii.m			  
+AUTO 6) Gcalcsnii.m
+
+-------------
+-------------
+EXTRAS
+-------------
+-------------
+
+-------------
+Sensitivity analysis
+-------------
+
+sensitivity.m - script used to infer results related to sensitivity of the model to parameter values
+
+-------------
+Bailout trigger charts
+-------------
+
+triggerTI.m - script used to generate charts with income and bailout trigger for each bank
